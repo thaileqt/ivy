@@ -1779,6 +1779,11 @@ class Tensor:
     def adjoint(self):
         return torch_frontend.adjoint(self)
 
+    @with_unsupported_dtypes({"2.0.1 and below": ("float16", "bfloat16")}, "torch")
+    def logit_(self):
+        self.ivy_array = torch_frontend.logit(self).ivy_array
+        return self
+
     @with_unsupported_dtypes(
         {"2.0.1 and below": ("int16", "float16", "bfloat16")}, "torch"
     )
